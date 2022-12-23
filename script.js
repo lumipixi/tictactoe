@@ -87,10 +87,20 @@ const drawController = (() => {
   const _squares = document.querySelectorAll(".square");
   const _resultsSection = document.querySelector(".results");
 
+  const _updateResults = (string) => (_resultsSection.textContent = string);
+
   const _updateBoard = () => {
     _squares.forEach((square, index) => {
       const squareMark = gameBoard.getSquare(index);
       square.innerHTML = squareMark;
+      switch (squareMark) {
+        case "X":
+          square.classList.replace("blankMark", "blueMark");
+          break;
+        case "O":
+          square.classList.replace("blankMark", "redMark");
+          break;
+      }
     });
   };
 
@@ -101,15 +111,22 @@ const drawController = (() => {
     console.log(gameBoard.printBoard());
     _updateBoard();
     if (winner) {
+      _updateResults(winner);
       alert(winner);
       _squares.forEach((square) => square.removeEventListener("click", play));
     }
   };
 
   const init = () => {
-    _squares.forEach((square) => square.addEventListener("click", play));
+    _squares.forEach((square) => {
+      square.classList.remove("redMark");
+      square.classList.remove("blueMark");
+      square.classList.add("blankMark");
+      square.addEventListener("click", play);
+    });
     game.reset();
     _updateBoard();
+    _updateResults("");
   };
 
   return {

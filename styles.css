@@ -17,11 +17,14 @@ body {
   margin: 0;
   background-color: #484848;
   font-size: 8rem;
+  font-weight: bold;
   color: #08d8f8;
 }
 
 #container {
-  display:grid;
+  display: grid;
+  justify-content: center;
+  padding-top: 4rem;
 }
 
 .gameboard {
@@ -44,7 +47,31 @@ body {
 }
 
 .results {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  font-size: 5rem;
   grid-column: 1 / -1;
   border-inline: 0.6rem solid skyblue;
   border-block: 0.8rem solid skyblue;
+}
+
+#reset-button {
+  font-size: 3rem;
+  width: 16rem;
+  height: 8rem;
+  margin-top: 3rem;
+  margin-left: 3rem;
+}
+
+.redMark {
+  color: firebrick;
+}
+
+.blueMark {
+  color: blue;
+}
+
+.blankMark {
+  color: white;
 }
