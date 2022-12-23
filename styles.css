@@ -16,5 +16,29 @@ html {
 body {
   margin: 0;
   background-color: #484848;
+  font-size: 8rem;
+  color: #08d8f8;
 }
 
+#container {
+  display:grid;
+}
+
+.gameboard {
+  margin-inline: auto;
+  width: 64rem;
+  height: 64rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  background-color: #308840;
+  border: 1.2rem solid lightblue;
+}
+
+
+.square {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  border: 0.8rem solid skyblue;
+}

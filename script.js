@@ -36,14 +36,15 @@ const gameBoard = (() => {
     //*If one row, col or diag is true, there is a winner
     return row1 || row2 || row3 || col1 || col2 || col3 || diag1 || diag2;
   };
-
-  const clear = () => board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
+  let getSquare = (index) => board[index];
+  const clear = () => (board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]);
 
   return {
     mark,
     printBoard,
     checkWinner,
     clear,
+    getSquare,
   };
 })();
 
@@ -70,7 +71,7 @@ const game = (() => {
   const reset = () => {
     gameBoard.clear();
     turn = 1;
-  }
+  };
 
   return {
     playTurn,
@@ -82,27 +83,28 @@ const game = (() => {
 p1 = createPlayer("X");
 p2 = createPlayer("O");
 
-console.log(game.printTurn());
-game.playTurn(6);
-console.log(gameBoard.printBoard());
 
-console.log(game.printTurn());
-game.playTurn(5);
-console.log(gameBoard.printBoard());
+const drawController = (() => {
+  const squares = document.querySelectorAll(".square");
+  const play = (e) => {
+    const selectedSquareIndex = e.target.getAttribute("data-index");
+    console.log(game.printTurn());
+    let winner = game.playTurn(selectedSquareIndex);
+    console.log(gameBoard.printBoard());
+    if (winner) alert(winner);
+    drawController.update()
+  }
+  squares.forEach(square => square.addEventListener("click", play));
+  const update = () => {
+    squares.forEach((square, index) => {
+      const squareMark = gameBoard.getSquare(index);
+      square.innerHTML = squareMark;
+    });
+  };
+  return {
+    update,
+    play,
+  };
+})();
 
-console.log(game.printTurn());
-game.playTurn(4);
-console.log(gameBoard.printBoard());
-
-console.log(game.printTurn());
-game.playTurn(7);
-console.log(gameBoard.printBoard());
-
-console.log(game.printTurn());
-console.log(game.playTurn(2));
-console.log(gameBoard.printBoard());
-
-console.log(game.printTurn());
-console.log(game.reset());
-console.log(game.playTurn(0));
-console.log(gameBoard.printBoard());
+drawController.update();
