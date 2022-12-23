@@ -1,5 +1,5 @@
 const gameBoard = (() => {
-  const board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
+  let board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
   const mark = (square, player) => {
     if (board[square] === "X" || board[square] === "O") return;
     board[square] = player.marker;
@@ -20,7 +20,6 @@ const gameBoard = (() => {
     const checkTriplet = (triplet) => {
       const value = triplet[0];
       if (!(value === "X" || value === "O")) return undefined;
-      console.log(triplet);
       return triplet[1] === value && triplet[2] === value ? true : false;
     };
     //*Check rows
@@ -38,10 +37,13 @@ const gameBoard = (() => {
     return row1 || row2 || row3 || col1 || col2 || col3 || diag1 || diag2;
   };
 
+  const clear = () => board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
+
   return {
     mark,
     printBoard,
     checkWinner,
+    clear,
   };
 })();
 
@@ -65,10 +67,15 @@ const game = (() => {
     ++turn;
   };
   const printTurn = () => turn;
+  const reset = () => {
+    gameBoard.clear();
+    turn = 1;
+  }
 
   return {
     playTurn,
     printTurn,
+    reset,
   };
 })();
 
@@ -93,4 +100,9 @@ console.log(gameBoard.printBoard());
 
 console.log(game.printTurn());
 console.log(game.playTurn(2));
+console.log(gameBoard.printBoard());
+
+console.log(game.printTurn());
+console.log(game.reset());
+console.log(game.playTurn(0));
 console.log(gameBoard.printBoard());
