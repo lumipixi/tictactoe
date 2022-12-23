@@ -26,19 +26,25 @@ body {
 
 .gameboard {
   margin-inline: auto;
-  width: 64rem;
-  height: 64rem;
+  width: 60rem;
+  height: 60rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 4fr 4fr 4fr 3fr;
   background-color: #308840;
   border: 1.2rem solid lightblue;
 }
-
 
 .square {
   display: grid;
   justify-content: center;
   align-content: center;
-  border: 0.8rem solid skyblue;
+  border-inline: 0.6rem solid skyblue;
+  border-block: 0.8rem solid skyblue;
+}
+
+.results {
+  grid-column: 1 / -1;
+  border-inline: 0.6rem solid skyblue;
+  border-block: 0.8rem solid skyblue;
 }

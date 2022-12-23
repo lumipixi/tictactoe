@@ -1,13 +1,13 @@
 const gameBoard = (() => {
-  let board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
+  let _board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"];
   const mark = (square, player) => {
-    if (board[square] === "X" || board[square] === "O") return;
-    board[square] = player.marker;
+    if (_board[square] === "X" || _board[square] === "O") return;
+    _board[square] = player.marker;
     return true;
   };
   const printBoard = () => {
     let output = "";
-    board.forEach((square, index) => {
+    _board.forEach((square, index) => {
       //*new line for each row
       if (index === 3 || index === 6) {
         output += "\n";
@@ -23,21 +23,21 @@ const gameBoard = (() => {
       return triplet[1] === value && triplet[2] === value ? true : false;
     };
     //*Check rows
-    const row1 = checkTriplet(board.slice(0, 3));
-    const row2 = checkTriplet(board.slice(3, 6));
-    const row3 = checkTriplet(board.slice(6));
+    const row1 = checkTriplet(_board.slice(0, 3));
+    const row2 = checkTriplet(_board.slice(3, 6));
+    const row3 = checkTriplet(_board.slice(6));
     //*Check cols
-    const col1 = checkTriplet([board[0], board[3], board[6]]);
-    const col2 = checkTriplet([board[1], board[4], board[7]]);
-    const col3 = checkTriplet([board[2], board[5], board[8]]);
+    const col1 = checkTriplet([_board[0], _board[3], _board[6]]);
+    const col2 = checkTriplet([_board[1], _board[4], _board[7]]);
+    const col3 = checkTriplet([_board[2], _board[5], _board[8]]);
     //*Check diagonally
-    const diag1 = checkTriplet([board[0], board[4], board[8]]);
-    const diag2 = checkTriplet([board[6], board[4], board[2]]);
+    const diag1 = checkTriplet([_board[0], _board[4], _board[8]]);
+    const diag2 = checkTriplet([_board[6], _board[4], _board[2]]);
     //*If one row, col or diag is true, there is a winner
     return row1 || row2 || row3 || col1 || col2 || col3 || diag1 || diag2;
   };
-  let getSquare = (index) => board[index];
-  const clear = () => (board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]);
+  let getSquare = (index) => _board[index];
+  const clear = () => (_board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]);
 
   return {
     mark,
@@ -83,28 +83,39 @@ const game = (() => {
 p1 = createPlayer("X");
 p2 = createPlayer("O");
 
-
 const drawController = (() => {
-  const squares = document.querySelectorAll(".square");
+  const _squares = document.querySelectorAll(".square");
+  const _resultsSection = document.querySelector(".results");
+
+  const _updateBoard = () => {
+    _squares.forEach((square, index) => {
+      const squareMark = gameBoard.getSquare(index);
+      square.innerHTML = squareMark;
+    });
+  };
+
   const play = (e) => {
     const selectedSquareIndex = e.target.getAttribute("data-index");
     console.log(game.printTurn());
     let winner = game.playTurn(selectedSquareIndex);
     console.log(gameBoard.printBoard());
-    if (winner) alert(winner);
-    drawController.update()
-  }
-  squares.forEach(square => square.addEventListener("click", play));
-  const update = () => {
-    squares.forEach((square, index) => {
-      const squareMark = gameBoard.getSquare(index);
-      square.innerHTML = squareMark;
-    });
+    _updateBoard();
+    if (winner) {
+      alert(winner);
+      _squares.forEach((square) => square.removeEventListener("click", play));
+    }
   };
+
+  const init = () => {
+    _squares.forEach((square) => square.addEventListener("click", play));
+    game.reset();
+    _updateBoard();
+  };
+
   return {
-    update,
     play,
+    init,
   };
 })();
 
-drawController.update();
+drawController.init();
