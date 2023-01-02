@@ -29,8 +29,8 @@ body {
 
 .gameboard {
   margin-inline: auto;
-  width: 60rem;
-  height: 60rem;
+  width: 64rem;
+  height: 64rem;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 4fr 4fr 4fr 3fr;
@@ -56,14 +56,6 @@ body {
   border-block: 0.8rem solid skyblue;
 }
 
-#reset-button {
-  font-size: 3rem;
-  width: 16rem;
-  height: 8rem;
-  margin-top: 3rem;
-  margin-left: 3rem;
-}
-
 .redMark {
   color: firebrick;
 }
@@ -74,4 +66,40 @@ body {
 
 .blankMark {
   color: white;
+}
+
+#names {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 2fr 1fr 2fr;
+  align-items: center;
+  margin-top: 1.5rem;
+  font-size: 4.5rem;
+}
+
+.player-name {
+  color: lightgray;
+}
+
+.player-name:hover {
+  color: antiquewhite;
+}
+
+.versus {
+  justify-self: center;
+}
+.p2-name {
+  justify-self: end;
+}
+
+#reset-button {
+  margin-top: 1.5rem;
+  grid-column: 1 / -1;
+  font-size: 3rem;
+  height: 8rem;
+  background-color: #777;
+  color: white;
+  border-width: 4px;
+  border-color: gray;
+  border-radius: 16px;
 }

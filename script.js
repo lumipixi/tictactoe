@@ -49,7 +49,10 @@ const gameBoard = (() => {
 })();
 
 const createPlayer = (marker) => {
-  return { marker };
+  let _nickname = marker;
+  const setName = newName => _nickname = newName;
+  const getName = () => _nickname;
+  return { setName, getName, marker };
 };
 
 const game = (() => {
@@ -63,7 +66,7 @@ const game = (() => {
     if (!moveResult) return;
     //* The game can be won starting from the 5th turn.
     if (turn >= 5 && gameBoard.checkWinner()) {
-      return `${currentPlayer.marker} wins!`;
+      return `${currentPlayer.getName()} wins!`;
     }
     ++turn;
   };
@@ -86,6 +89,8 @@ p2 = createPlayer("O");
 const drawController = (() => {
   const _squares = document.querySelectorAll(".square");
   const _resultsSection = document.querySelector(".results");
+  const _p1Name = document.querySelector(".p1-name");
+  const _p2Name = document.querySelector(".p2-name");
 
   const _updateResults = (string) => (_resultsSection.textContent = string);
 
@@ -117,6 +122,21 @@ const drawController = (() => {
     }
   };
 
+  const rename = (e) => {
+    const newNickname = prompt("What's your new name?");
+    if (newNickname.length > 8 || newNickname.length <= 0) {
+      alert("Invalid name! Make sure it has 1-8 characters.");
+      return;
+    }
+    if (e.target.getAttribute("data-player") === "p1") {
+      p1.setName(newNickname);
+      _p1Name.textContent = `${newNickname} (X)`;
+    } else {
+      p2.setName(newNickname);
+      _p2Name.textContent = `${newNickname} (O)`;
+    };
+  };
+
   const init = () => {
     _squares.forEach((square) => {
       square.classList.remove("redMark");
@@ -127,12 +147,19 @@ const drawController = (() => {
     game.reset();
     _updateBoard();
     _updateResults("");
+    _p1Name.addEventListener("click", rename)
+    _p2Name.addEventListener("click", rename)
+    _p1Name.textContent = `${p1.getName()} (X)`;
+    _p2Name.textContent = `${p2.getName()} (O)`;
   };
 
   return {
     play,
     init,
+    rename,
   };
 })();
 
+p1.setName("P1")
+p2.setName("P2")
 drawController.init();
