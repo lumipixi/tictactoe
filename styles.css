@@ -36,7 +36,8 @@ body {
   grid-template-rows: 4fr 4fr 4fr 3fr;
   background-color: #308840;
   border: 1.2rem solid lightblue;
-}
+  border-radius: 16px;
+  }
 
 .square {
   display: grid;
@@ -73,7 +74,7 @@ body {
   justify-content: space-between;
   grid-template-columns: 2fr 1fr 2fr;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
   font-size: 4.5rem;
 }
 
@@ -101,5 +102,5 @@ body {
   color: white;
   border-width: 4px;
   border-color: gray;
-  border-radius: 16px;
+  border-radius: 8px;
 }

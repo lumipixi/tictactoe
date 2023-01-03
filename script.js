@@ -117,7 +117,6 @@ const drawController = (() => {
     _updateBoard();
     if (winner) {
       _updateResults(winner);
-      alert(winner);
       _squares.forEach((square) => square.removeEventListener("click", play));
     }
   };
